@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Операции с числами</title>
+</head>
+<body>
+
+<h2>Операции с числами</h2>
+
+<form id="operationForm">
+    <label for="operationSelect">Выберите операцию:</label>
+    <select id="operationSelect" name="operation">
+        <option value="even">Четные числа</option>
+        <option value="odd">Нечетные числа</option>
+        <option value="prime">Простые числа</option>
+        <option value="composite">Составные числа</option>
+    </select>
+    <br>
+    <label for="rangeInput">Введите диапазон (N):</label>
+    <input type="text" id="rangeInput" name="range" required>
+    <br>
+    <button type="button" onclick="выполнитьОперацию()">Показать числа</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+function выполнитьОперацию() {
+    var операцияВыбор = document.getElementById("operationSelect");
+    var выбраннаяОперация = операцияВыбор.value;
+
+    var диапазонВвод = document.getElementById("rangeInput");
+    var значениеДиапазона = parseInt(диапазонВвод.value);
+
+    var контейнерРезультата = document.getElementById("result");
+    контейнерРезультата.innerHTML = ""; // Очистим предыдущий результат
+
+    if (isNaN(значениеДиапазона) || значениеДиапазона <= 0) {
+        контейнерРезультата.innerHTML = "Пожалуйста, введите действительное положительное число для диапазона.";
+        return;
+    }
+
+    switch (выбраннаяОперация) {
+        case "even":
+            for (var i = 2; i <= значениеДиапазона; i += 2) {
+                контейнерРезультата.innerHTML += i + " ";
+            }
+            break;
+        case "odd":
+            for (var i = 1; i <= значениеДиапазона; i += 2) {
+                контейнерРезультата.innerHTML += i + " ";
+            }
+            break;
+        case "prime":
+            for (var i = 2; i <= значениеДиапазона; i++) {
+                if (простоеЧисло(i)) {
+                    контейнерРезультата.innerHTML += i + " ";
+                }
+            }
+            break;
+        case "composite":
+            for (var i = 4; i <= значениеДиапазона; i++) {
+                if (!простоеЧисло(i)) {
+                    контейнерРезультата.innerHTML += i + " ";
+                }
+            }
+            break;
+        default:
+            контейнерРезультата.innerHTML = "Выбрана неверная операция.";
+    }
+}
+
+function простоеЧисло(num) {
+    for (var i = 2; i < num; i++) {
+        if (num % i === 0) {
+            return false;
+        }
+    }
+    return num > 1;
+}
+</script>
+
+</body>
+</html>
